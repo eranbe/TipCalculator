@@ -22,10 +22,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateTotal(double tipPercent) {
         String billStr = etBill.getText().toString();
-        double bill = Double.parseDouble(billStr);
-        double tip = bill * tipPercent;
-        double total = bill + tip;
-        tvTotal.setText("Total: $" + total);
+        if (billStr.isEmpty()) {
+            tvTotal.setText("Total: $0.0");
+        } else {
+            double bill = Double.parseDouble(billStr);
+            double tip = bill * tipPercent;
+            double total = bill + tip;
+            tvTotal.setText("Total: $" + total);
+        }
     }
     public void init() {
         btn10p = findViewById(R.id.btn10p);
