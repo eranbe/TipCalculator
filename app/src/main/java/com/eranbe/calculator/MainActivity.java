@@ -19,7 +19,11 @@ public class MainActivity extends AppCompatActivity {
     private Button btn20p;
     private EditText etBill;
     private TextView tvTotal;
+    private Button btnSplit;
+    private EditText etSplit;
+    private TextView tvEach;
 
+    private double total;
     private void updateTotal(double tipPercent) {
         String billStr = etBill.getText().toString();
         if (billStr.isEmpty()) {
@@ -27,8 +31,22 @@ public class MainActivity extends AppCompatActivity {
         } else {
             double bill = Double.parseDouble(billStr);
             double tip = bill * tipPercent;
-            double total = bill + tip;
+            this.total = bill + tip;
             tvTotal.setText("Total: $" + total);
+        }
+        String splitStr = etSplit.getText().toString();
+        if (!splitStr.isEmpty()) {
+            updateSplit();
+        }
+    }
+    private void updateSplit() {
+        String splitStr = etSplit.getText().toString();
+        if (splitStr.isEmpty()) {
+            tvEach.setText("Each: $0.0");
+        } else {
+            int split = Integer.parseInt(splitStr);
+            double each = total / split;
+            tvEach.setText("Each: $" + each);
         }
     }
     public void init() {
@@ -37,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
         btn20p = findViewById(R.id.btn20p);
         etBill = findViewById(R.id.etBill);
         tvTotal = findViewById(R.id.tvTotal);
+        btnSplit = findViewById(R.id.btnSplit);
+        etSplit = findViewById(R.id.etSplit);
+        tvEach = findViewById(R.id.tvEach);
 
         btn10p.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +77,13 @@ public class MainActivity extends AppCompatActivity {
                 updateTotal(0.20);
             }
         });
+        btnSplit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateSplit();
+            }
+        });
+
     }
 
     @Override
